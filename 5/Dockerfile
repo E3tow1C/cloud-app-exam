@@ -1,9 +1,17 @@
-FROM python:3.11-slim
+# this is alpine linux image
+FROM e3tow1c/care-hello:latest
+
+# in stalling pip3 for python3 in alpine linux
+RUN apk add --no-cache py3-pip
 
 WORKDIR /app
 
 COPY . .
 
-RUN pip3 install -r requirements.txt
+# Create and use virtual environment for pip installations
+RUN python3 -m venv /app/venv
+ENV PATH="/app/venv/bin:$PATH"
+
+RUN pip install -r requirements.txt
 
 CMD ["python3", "app.py"]
